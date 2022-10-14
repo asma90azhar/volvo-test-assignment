@@ -1,0 +1,12 @@
+{
+  "script": "return (function hideRemoveElements(hideRemoveElements, hideRemove) {\n    var visitedSelectors = {};\n    hideRemoveElements.hide.forEach(function (element) {\n        if (Array.isArray(element)) {\n            return element.forEach(function (singleElement) { return hideRemoveEl(singleElement, 'visibility', hideRemove); });\n        }\n        hideRemoveEl(element, 'visibility', hideRemove);\n    });\n    hideRemoveElements.remove.forEach(function (element) {\n        if (Array.isArray(element)) {\n            return element.forEach(function (singleElement) { return hideRemoveEl(singleElement, 'display', hideRemove); });\n        }\n        hideRemoveEl(element, 'display', hideRemove);\n    });\n    function hideRemoveEl(el, prop, hideRemove) {\n        if (el.style) {\n            setPropertyToElement(el, prop, hideRemove);\n        }\n        else {\n            try {\n                var selector = el.selector;\n                if (visitedSelectors[selector] == null) {\n                    visitedSelectors[selector] = true;\n                    var elems = document.querySelectorAll(selector);\n                    elems.forEach(function (singleEl) { return setPropertyToElement(singleEl, prop, hideRemove); });\n                }\n            }\n            catch (e) {\n                return getElementsByXpath(el.selector).forEach(function (singleEl) { return setPropertyToElement(singleEl, prop, hideRemove); });\n            }\n        }\n    }\n    function setPropertyToElement(el, prop, hideRemove) {\n        var value = prop === 'visibility' ? 'hidden' : 'none';\n        el.style[prop] = hideRemove ? value : '';\n    }\n    function getElementsByXpath(xpathToExecute) {\n        var result = [];\n        var nodesSnapshot = document.evaluate(xpathToExecute, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);\n        for (var i = 0; i < nodesSnapshot.snapshotLength; i++) {\n            result.push(nodesSnapshot.snapshotItem(i));\n        }\n        return result;\n    }\n}).apply(null, arguments)",
+  "args": [
+    {
+      "hide": [
+        {}
+      ],
+      "remove": []
+    },
+    true
+  ]
+}

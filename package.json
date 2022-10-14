@@ -1,0 +1,28 @@
+{
+    "name": "volvo-assignment-test",
+    "version": "0.1.0",
+    "description": "Test framework to test functional and visual regression includes Page Object Pattern",
+    "private": true,
+    "keywords": [
+    ],
+    "author": "Asma Karthar",
+    "license": "ISC",
+    "devDependencies": {
+        "@wdio/allure-reporter": "^7.25.1",
+        "@wdio/cli": "^7.25.1",
+        "@wdio/cucumber-framework": "^7.25.1",
+        "@wdio/local-runner": "^7.25.1",
+        "@wdio/spec-reporter": "^7.25.1",
+        "chromedriver": "^106.0.1",
+        "wdio-chromedriver-service": "^8.0.0",
+        "wdio-image-comparison-service": "^4.0.0",
+        "wdio-docker-service":"^3.2.1"
+    },
+    "scripts": {
+        "wdio": "wdio run wdio.conf.js",
+        "test": "npx wdio run ./wdio.conf.js",
+        "selenium": "docker-compose up",
+        "selenium:stop": "docker-compose down",
+        "report:allure": "allure generate --clean allure-results && allure open"
+    }
+}
